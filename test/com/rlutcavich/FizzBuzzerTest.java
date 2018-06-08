@@ -17,7 +17,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberDivisibleBy3Given_ShouldReturnFIZZ() {
-        int givenInput = NUMBER_DIVISBILE_BY_3;
+        int givenInput = NUMBER_DIVISIBLE_BY_3;
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -26,7 +26,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberDivisibleBy5Given_ShouldReturnBUZZ() {
-        int givenInput = NUMBER_DIVISBILE_BY_5;
+        int givenInput = NUMBER_DIVISIBLE_BY_5;
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -60,8 +60,8 @@ public class FizzBuzzerTest {
     }
 
     private static final int NUMBER_NOT_DIVISIBLE_BY_3_OR_5 = 1;
-    private static final int NUMBER_DIVISBILE_BY_3 = 3;
-    private static final int NUMBER_DIVISBILE_BY_5 = 5;
+    private static final int NUMBER_DIVISIBLE_BY_3 = 3;
+    private static final int NUMBER_DIVISIBLE_BY_5 = 5;
     private static final int NUMBER_DIVISIBLE_BY_3_AND_5 = 15;
     private static final int LARGEST_INT_DIVISIBLE_BY_3_AND_5 = 2147483640;
     private static final String FIZZ = "FIZZ";
