@@ -24,6 +24,15 @@ public class FizzBuzzerTest {
         thenOutputShouldMatchExpectedString(output, FIZZ);
     }
 
+    @Test
+    public void getValue_NumberDivisibleBy5Given_ShouldReturnBUZZ() {
+        int givenInput = NUMBER_DIVISBILE_BY_5;
+
+        String output = whenGetValueCalledWith(givenInput);
+
+        thenOutputShouldMatchExpectedString(output, BUZZ);
+    }
+
     private String whenGetValueCalledWith(int input) {
         return fizzBuzzer.getValue(input);
     }
@@ -34,5 +43,7 @@ public class FizzBuzzerTest {
 
     private static final int NUMBER_NOT_DIVISIBLE_BY_3_OR_5 = 1;
     private static final int NUMBER_DIVISBILE_BY_3 = 3;
+    private static final int NUMBER_DIVISBILE_BY_5 = 5;
     private static final String FIZZ = "FIZZ";
+    private static final String BUZZ = "BUZZ";
 }
