@@ -42,6 +42,15 @@ public class FizzBuzzerTest {
         thenOutputShouldMatchExpectedString(output, FIZZBUZZ);
     }
 
+    @Test
+    public void getValue_LargestIntDivisibleBy3AND5Given_ShouldReturnFIZZBUZZ() {
+        int givenInput = LARGEST_INT_DIVISIBLE_BY_3_AND_5;
+
+        String output = whenGetValueCalledWith(givenInput);
+
+        thenOutputShouldMatchExpectedString(output, FIZZBUZZ);
+    }
+
     private String whenGetValueCalledWith(int input) {
         return fizzBuzzer.getValue(input);
     }
@@ -54,6 +63,7 @@ public class FizzBuzzerTest {
     private static final int NUMBER_DIVISBILE_BY_3 = 3;
     private static final int NUMBER_DIVISBILE_BY_5 = 5;
     private static final int NUMBER_DIVISIBLE_BY_3_AND_5 = 15;
+    private static final int LARGEST_INT_DIVISIBLE_BY_3_AND_5 = 2147483640;
     private static final String FIZZ = "FIZZ";
     private static final String BUZZ = "BUZZ";
     private static final String FIZZBUZZ = "FIZZBUZZ";
