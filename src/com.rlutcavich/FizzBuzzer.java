@@ -2,7 +2,6 @@ package com.rlutcavich;
 
 public class FizzBuzzer {
 
-    public static final String BUZZ = "BUZZ";
 
     private FizzBuzzer() {}
 
@@ -12,7 +11,10 @@ public class FizzBuzzer {
 
     public String getValue(int input) {
         String output = String.valueOf(input);
-        if (input % 3 == 0) {
+
+        if (input % 3 == 0 && input % 5 == 0) {
+            output = FIZZBUZZ;
+        } else if (input % 3 == 0) {
             output = FIZZ;
         } else if (input % 5 == 0) {
             output = BUZZ;
@@ -21,5 +23,7 @@ public class FizzBuzzer {
     }
 
     // Constants
-    public static final String FIZZ = "FIZZ";
+    private static final String FIZZ = "FIZZ";
+    private static final String BUZZ = "BUZZ";
+    private static final String FIZZBUZZ = "FIZZBUZZ";
 }
