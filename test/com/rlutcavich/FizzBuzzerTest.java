@@ -8,7 +8,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberNotDivisbleBy3Or5Given_ShouldReturnNumber() {
-        int givenInput = NUMBER_NOT_DIVISIBLE_BY_3_OR_5;
+        int givenInput = givenNumberNotDivisibleByEither(3, 5);
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -17,7 +17,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberDivisibleBy3Given_ShouldReturnFIZZ() {
-        int givenInput = NUMBER_DIVISIBLE_BY_3;
+        int givenInput = givenNumberDivisibleBy(3);
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -26,7 +26,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberDivisibleBy5Given_ShouldReturnBUZZ() {
-        int givenInput = NUMBER_DIVISIBLE_BY_5;
+        int givenInput = givenNumberDivisibleBy(5);
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -57,6 +57,17 @@ public class FizzBuzzerTest {
 
     private void thenOutputShouldMatchExpectedString(String output, String expected) {
         Assert.assertEquals(expected, output);
+    }
+
+    private int givenNumberNotDivisibleByEither(int i, int j) {
+        return NUMBER_NOT_DIVISIBLE_BY_3_OR_5;
+    }
+
+    private int givenNumberDivisibleBy(int i) {
+        if (i == 3) {
+            return NUMBER_DIVISIBLE_BY_3;
+        }
+        return NUMBER_DIVISIBLE_BY_5;
     }
 
     private static final int NUMBER_NOT_DIVISIBLE_BY_3_OR_5 = 1;
