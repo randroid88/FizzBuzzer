@@ -1,23 +1,39 @@
 package com.rlutcavich;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class FizzBuzzerTest {
     private FizzBuzzer fizzBuzzer = FizzBuzzer.getInstance();
+    private ArrayList<Integer> numbersDivisibleByFirstButNotSecond;
+    private ArrayList<Integer> numbersDivisibleBySecondButNotFirst;
+    private ArrayList<Integer> numbersDivisibleByNeither;
+
+    @Before
+    public void setup() {
+        numbersDivisibleByFirstButNotSecond = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(FIRST), givenNumbersDivisibleBy(SECOND));
+        numbersDivisibleBySecondButNotFirst = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(SECOND), givenNumbersDivisibleBy(FIRST));
+        numbersDivisibleByNeither = givenNumbersInNeither();
+
+        randomizeGivenNumbers();
+    }
 
     @Test
-    public void getValue_NumberNotDivisbleBy3Or5Given_ShouldReturnNumber() {
-        int givenInput = givenNumberNotDivisibleByEither(3, 5);
+    public void getValue_NumberNotDivisibleBy3Or5Given_ShouldReturnNumber() {
+        int givenInput = givenNumberNotDivisibleByEither();
 
         String output = whenGetValueCalledWith(givenInput);
 
-        thenOutputShouldMatchExpectedString(output, String.valueOf(NUMBER_NOT_DIVISIBLE_BY_3_OR_5));
+        thenOutputShouldMatchExpectedString(output, String.valueOf(givenInput));
     }
 
     @Test
     public void getValue_NumberDivisibleBy3Given_ShouldReturnFIZZ() {
-        int givenInput = givenNumberDivisibleBy(3);
+        int givenInput = givenRandomNumberDivisibleBy(FIRST);
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -26,7 +42,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberDivisibleBy5Given_ShouldReturnBUZZ() {
-        int givenInput = givenNumberDivisibleBy(5);
+        int givenInput = givenRandomNumberDivisibleBy(SECOND);
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -35,16 +51,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberDivisibleBy3And5Given_ShouldReturnFIZZBUZZ() {
-        int givenInput = NUMBER_DIVISIBLE_BY_3_AND_5;
-
-        String output = whenGetValueCalledWith(givenInput);
-
-        thenOutputShouldMatchExpectedString(output, FIZZBUZZ);
-    }
-
-    @Test
-    public void getValue_LargestIntDivisibleBy3AND5Given_ShouldReturnFIZZBUZZ() {
-        int givenInput = LARGEST_INT_DIVISIBLE_BY_3_AND_5;
+        int givenInput = givenRandomNumberDivisibleByBoth();
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -59,22 +66,71 @@ public class FizzBuzzerTest {
         Assert.assertEquals(expected, output);
     }
 
-    private int givenNumberNotDivisibleByEither(int i, int j) {
-        return NUMBER_NOT_DIVISIBLE_BY_3_OR_5;
+    private int givenNumberNotDivisibleByEither() {
+        return numbersDivisibleByNeither.get(0);
     }
 
-    private int givenNumberDivisibleBy(int i) {
-        if (i == 3) {
-            return NUMBER_DIVISIBLE_BY_3;
+    private int givenRandomNumberDivisibleBy(int i) {
+        int givenNumber = numbersDivisibleByFirstButNotSecond.get(0);
+        if (i == 5) {
+            givenNumber = numbersDivisibleBySecondButNotFirst.get(0);
         }
-        return NUMBER_DIVISIBLE_BY_5;
+        return givenNumber;
     }
 
-    private static final int NUMBER_NOT_DIVISIBLE_BY_3_OR_5 = 1;
-    private static final int NUMBER_DIVISIBLE_BY_3 = 3;
-    private static final int NUMBER_DIVISIBLE_BY_5 = 5;
-    private static final int NUMBER_DIVISIBLE_BY_3_AND_5 = 15;
-    private static final int LARGEST_INT_DIVISIBLE_BY_3_AND_5 = 2147483640;
+    private int givenRandomNumberDivisibleByBoth() {
+        int givenNumber = numbersDivisibleByFirstButNotSecond.get(0);
+        return givenNumber * SECOND;
+    }
+
+    private ArrayList<Integer> givenNumbersDivisibleBy(int num) {
+        int countOfNumbers = MAX_NUMBER/num;
+
+        ArrayList<Integer> numbersDivisibleByNum = new ArrayList<>(countOfNumbers);
+        for (int i = num; i < MAX_NUMBER; i += num) {
+            if (i % num == 0) {
+                numbersDivisibleByNum.add(i);
+            }
+        }
+        return numbersDivisibleByNum;
+    }
+
+    private ArrayList<Integer> givenNumbersInFirstListButNotSecond(ArrayList<Integer> firstNumbers, ArrayList<Integer> secondNumbers) {
+        ArrayList<Integer> numbersInFirstListButNotSecond = new ArrayList<>(firstNumbers.size());
+        for (int aNumFromFirstNumbers : firstNumbers) {
+            if (!secondNumbers.contains(aNumFromFirstNumbers)) {
+                numbersInFirstListButNotSecond.add(aNumFromFirstNumbers);
+            }
+        }
+        return numbersInFirstListButNotSecond;
+    }
+
+    private ArrayList<Integer> givenNumbersInNeither() {
+        int sizeOfNumbersInNeither = getSizeOfNumbersInNeither();
+        ArrayList<Integer> numbersInNeither = new ArrayList<>(sizeOfNumbersInNeither);
+
+        for (int i = 1; i < sizeOfNumbersInNeither; i++) {
+            if (!numbersDivisibleByFirstButNotSecond.contains(i) && !numbersDivisibleBySecondButNotFirst.contains(i)) {
+                numbersInNeither.add(i);
+            }
+        }
+
+        return numbersInNeither;
+    }
+
+    private int getSizeOfNumbersInNeither() {
+        return MAX_NUMBER - (numbersDivisibleByFirstButNotSecond.size() + numbersDivisibleBySecondButNotFirst.size());
+    }
+
+    private void randomizeGivenNumbers() {
+        Collections.shuffle(numbersDivisibleByFirstButNotSecond);
+        Collections.shuffle(numbersDivisibleBySecondButNotFirst);
+        Collections.shuffle(numbersDivisibleByNeither);
+    }
+
+    private static final int FIRST = 3;
+    private static final int SECOND = 5;
+    private static final int MAX_NUMBER = 100;
     private static final String FIZZ = "FIZZ";
     private static final String BUZZ = "BUZZ";
     private static final String FIZZBUZZ = "FIZZBUZZ";
