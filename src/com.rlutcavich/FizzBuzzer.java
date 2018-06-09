@@ -1,8 +1,7 @@
 package com.rlutcavich;
 
 public class FizzBuzzer {
-
-
+    
     private FizzBuzzer() {}
 
     public static FizzBuzzer getInstance() {
