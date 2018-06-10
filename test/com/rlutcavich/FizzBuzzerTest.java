@@ -16,10 +16,9 @@ public class FizzBuzzerTest {
 
     @Before
     public void setup() {
-        setupGivenNumbers();
-        randomizeGivenNumbers();
+        setupGivenNumbers(FIRST_DIVISOR, SECOND_DIVISOR);
 
-        fizzBuzzer = FizzBuzzer.getInstance(FIRST_KEYWORD, SECOND_KEYWORD);
+        fizzBuzzer = FizzBuzzer.getInstance(FIRST_DIVISOR, SECOND_DIVISOR, FIRST_KEYWORD, SECOND_KEYWORD);
     }
 
     @Test
@@ -51,7 +50,7 @@ public class FizzBuzzerTest {
 
     @Test
     public void getValue_NumberDivisibleByFirstAndSecondDivisorGiven_ShouldReturnCombinedKeyword() {
-        int givenInput = givenRandomNumberDivisibleByBoth();
+        int givenInput = givenRandomNumberDivisibleByBoth(FIRST_DIVISOR, SECOND_DIVISOR);
 
         String output = whenGetValueCalledWith(givenInput);
 
@@ -59,13 +58,13 @@ public class FizzBuzzerTest {
     }
 
     @Test
-    public void getValue_defaultFizzBuzzerGiven_ShouldUseDefaultKeywords() {
+    public void getValue_defaultFizzBuzzerGiven_ShouldUseDefaultDivisorAndKeywords() {
         givenDefaultFizzBuzzer();
-        int givenInput = givenRandomNumberDivisibleByBoth();
+        int givenInput = givenRandomNumberDivisibleByBoth(FIRST_DIVISOR_DEFAULT, SECOND_DIVISOR_DEFAULT);
 
         String output = whenGetValueCalledWith(givenInput);
 
-        thenOutputShouldMatchExpectedString(output, FIRST_DEFAULT_KEYWORD + SECOND_DEFAULT_KEYWORD);
+        thenOutputShouldMatchExpectedString(output, FIRST_KEYWORD_DEFAULT + SECOND_KEYWORD_DEFAULT);
     }
 
     private String whenGetValueCalledWith(int input) {
@@ -82,15 +81,15 @@ public class FizzBuzzerTest {
 
     private int givenRandomNumberDivisibleBy(int i) {
         int givenNumber = numbersDivisibleByFirstButNotSecondDivisor.get(0);
-        if (i == 5) {
+        if (i == SECOND_DIVISOR) {
             givenNumber = numbersDivisibleBySecondButNotFirstDivisor.get(0);
         }
         return givenNumber;
     }
 
-    private int givenRandomNumberDivisibleByBoth() {
+    private int givenRandomNumberDivisibleByBoth(int firstDivisor, int secondDivisor) {
         int givenNumber = numbersDivisibleByFirstButNotSecondDivisor.get(0);
-        return givenNumber * SECOND_DIVISOR;
+        return givenNumber * secondDivisor;
     }
 
     private ArrayList<Integer> givenNumbersDivisibleBy(int num) {
@@ -144,6 +143,7 @@ public class FizzBuzzerTest {
     }
 
     private void givenDefaultFizzBuzzer() {
+        setupGivenNumbers(FIRST_DIVISOR_DEFAULT, SECOND_DIVISOR_DEFAULT);
         fizzBuzzer = FizzBuzzer.getInstance();
     }
 
@@ -151,14 +151,16 @@ public class FizzBuzzerTest {
         return MAX_NUMBER - (numbersDivisibleByFirstButNotSecondDivisor.size() + numbersDivisibleBySecondButNotFirstDivisor.size());
     }
 
-    private void setupGivenNumbers() {
-        ArrayList<Integer> numbersDivisibleByFirstDivisor = givenNumbersDivisibleBy(FIRST_DIVISOR);
-        ArrayList<Integer> numbersDivisibleBySecondDivisor = givenNumbersDivisibleBy(SECOND_DIVISOR);
+    private void setupGivenNumbers(int firstDivisor, int secondDivisor) {
+        ArrayList<Integer> numbersDivisibleByFirstDivisor = givenNumbersDivisibleBy(firstDivisor);
+        ArrayList<Integer> numbersDivisibleBySecondDivisor = givenNumbersDivisibleBy(secondDivisor);
 
         numbersDivisibleByFirstButNotSecondDivisor = givenNumbersInFirstListButNotSecond(numbersDivisibleByFirstDivisor, numbersDivisibleBySecondDivisor);
         numbersDivisibleBySecondButNotFirstDivisor = givenNumbersInFirstListButNotSecond(numbersDivisibleBySecondDivisor, numbersDivisibleByFirstDivisor);
         numbersDivisibleByBothDivisor = givenNumbersDivisibleByBoth(numbersDivisibleByFirstDivisor, numbersDivisibleBySecondDivisor);
         numbersDivisibleByNeitherDivisor = givenNumbersInNeither();
+
+        randomizeGivenNumbers();
     }
 
     private void randomizeGivenNumbers() {
@@ -167,11 +169,14 @@ public class FizzBuzzerTest {
         Collections.shuffle(numbersDivisibleByNeitherDivisor);
     }
 
-    private static final int FIRST_DIVISOR = 3;
-    private static final int SECOND_DIVISOR = 5;
+
+    private static final int FIRST_DIVISOR_DEFAULT = 3;
+    private static final int SECOND_DIVISOR_DEFAULT = 5;
+    private static final int FIRST_DIVISOR = 4;
+    private static final int SECOND_DIVISOR = 6;
     private static final int MAX_NUMBER = 100;
-    private static final String FIRST_DEFAULT_KEYWORD = "Fizz";
-    private static final String SECOND_DEFAULT_KEYWORD = "Buzz";
+    private static final String FIRST_KEYWORD_DEFAULT = "Fizz";
+    private static final String SECOND_KEYWORD_DEFAULT = "Buzz";
     private static final String FIRST_KEYWORD = "Bizz";
     private static final String SECOND_KEYWORD = "Fuzz";
 }
