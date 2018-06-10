@@ -11,6 +11,7 @@ public class FizzBuzzerTest {
     private FizzBuzzer fizzBuzzer;
     private ArrayList<Integer> numbersDivisibleByFirstButNotSecondDivisor;
     private ArrayList<Integer> numbersDivisibleBySecondButNotFirstDivisor;
+    private ArrayList<Integer> numbersDivisibleByBothDivisor;
     private ArrayList<Integer> numbersDivisibleByNeitherDivisor;
 
     @Before
@@ -104,6 +105,19 @@ public class FizzBuzzerTest {
         return numbersDivisibleByNum;
     }
 
+    private ArrayList<Integer> givenNumbersDivisibleByBoth(ArrayList<Integer> numbersDivisibleByFirst, ArrayList<Integer> numbersDivisibleBySecond) {
+        int countOfNumbers = MAX_NUMBER/(numbersDivisibleByFirst.size() * numbersDivisibleBySecond.size());
+
+        ArrayList<Integer> numbersDivisibleByBoth = new ArrayList<>(countOfNumbers);
+        for (int aNumberDivisibleByFirst : numbersDivisibleByFirst) {
+            if (numbersDivisibleBySecond.contains(aNumberDivisibleByFirst)) {
+                numbersDivisibleByBoth.add(aNumberDivisibleByFirst);
+            }
+        }
+
+        return numbersDivisibleByBoth;
+    }
+
     private ArrayList<Integer> givenNumbersInFirstListButNotSecond(ArrayList<Integer> firstNumbers, ArrayList<Integer> secondNumbers) {
         ArrayList<Integer> numbersInFirstListButNotSecond = new ArrayList<>(firstNumbers.size());
         for (int aNumFromFirstNumbers : firstNumbers) {
@@ -119,7 +133,9 @@ public class FizzBuzzerTest {
         ArrayList<Integer> numbersInNeither = new ArrayList<>(sizeOfNumbersInNeither);
 
         for (int i = 1; i < sizeOfNumbersInNeither; i++) {
-            if (!numbersDivisibleByFirstButNotSecondDivisor.contains(i) && !numbersDivisibleBySecondButNotFirstDivisor.contains(i)) {
+            if (!numbersDivisibleByFirstButNotSecondDivisor.contains(i)
+                    && !numbersDivisibleBySecondButNotFirstDivisor.contains(i)
+                    && !numbersDivisibleByBothDivisor.contains(i)) {
                 numbersInNeither.add(i);
             }
         }
@@ -136,8 +152,12 @@ public class FizzBuzzerTest {
     }
 
     private void setupGivenNumbers() {
-        numbersDivisibleByFirstButNotSecondDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(FIRST_DIVISOR), givenNumbersDivisibleBy(SECOND_DIVISOR));
-        numbersDivisibleBySecondButNotFirstDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(SECOND_DIVISOR), givenNumbersDivisibleBy(FIRST_DIVISOR));
+        ArrayList<Integer> numbersDivisibleByFirstDivisor = givenNumbersDivisibleBy(FIRST_DIVISOR);
+        ArrayList<Integer> numbersDivisibleBySecondDivisor = givenNumbersDivisibleBy(SECOND_DIVISOR);
+
+        numbersDivisibleByFirstButNotSecondDivisor = givenNumbersInFirstListButNotSecond(numbersDivisibleByFirstDivisor, numbersDivisibleBySecondDivisor);
+        numbersDivisibleBySecondButNotFirstDivisor = givenNumbersInFirstListButNotSecond(numbersDivisibleBySecondDivisor, numbersDivisibleByFirstDivisor);
+        numbersDivisibleByBothDivisor = givenNumbersDivisibleByBoth(numbersDivisibleByFirstDivisor, numbersDivisibleBySecondDivisor);
         numbersDivisibleByNeitherDivisor = givenNumbersInNeither();
     }
 
