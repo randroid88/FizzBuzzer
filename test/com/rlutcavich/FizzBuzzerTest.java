@@ -9,21 +9,21 @@ import java.util.Collections;
 
 public class FizzBuzzerTest {
     private FizzBuzzer fizzBuzzer = FizzBuzzer.getInstance();
-    private ArrayList<Integer> numbersDivisibleByFirstButNotSecond;
-    private ArrayList<Integer> numbersDivisibleBySecondButNotFirst;
-    private ArrayList<Integer> numbersDivisibleByNeither;
+    private ArrayList<Integer> numbersDivisibleByFirstButNotSecondDivisor;
+    private ArrayList<Integer> numbersDivisibleBySecondButNotFirstDivisor;
+    private ArrayList<Integer> numbersDivisibleByNeitherDivisor;
 
     @Before
     public void setup() {
-        numbersDivisibleByFirstButNotSecond = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(FIRST), givenNumbersDivisibleBy(SECOND));
-        numbersDivisibleBySecondButNotFirst = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(SECOND), givenNumbersDivisibleBy(FIRST));
-        numbersDivisibleByNeither = givenNumbersInNeither();
+        numbersDivisibleByFirstButNotSecondDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(FIRST_DIVISOR), givenNumbersDivisibleBy(SECOND_DIVISOR));
+        numbersDivisibleBySecondButNotFirstDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(SECOND_DIVISOR), givenNumbersDivisibleBy(FIRST_DIVISOR));
+        numbersDivisibleByNeitherDivisor = givenNumbersInNeither();
 
         randomizeGivenNumbers();
     }
 
     @Test
-    public void getValue_NumberNotDivisibleBy3Or5Given_ShouldReturnNumber() {
+    public void getValue_NumberNotDivisibleByFirstOrSecondDivisorGiven_ShouldReturnNumber() {
         int givenInput = givenNumberNotDivisibleByEither();
 
         String output = whenGetValueCalledWith(givenInput);
@@ -32,30 +32,30 @@ public class FizzBuzzerTest {
     }
 
     @Test
-    public void getValue_NumberDivisibleBy3Given_ShouldReturnFIZZ() {
-        int givenInput = givenRandomNumberDivisibleBy(FIRST);
+    public void getValue_NumberDivisibleByFirstDivisorGiven_ShouldReturnFirstKeyword() {
+        int givenInput = givenRandomNumberDivisibleBy(FIRST_DIVISOR);
 
         String output = whenGetValueCalledWith(givenInput);
 
-        thenOutputShouldMatchExpectedString(output, FIZZ);
+        thenOutputShouldMatchExpectedString(output, FIRST_KEYWORD);
     }
 
     @Test
-    public void getValue_NumberDivisibleBy5Given_ShouldReturnBUZZ() {
-        int givenInput = givenRandomNumberDivisibleBy(SECOND);
+    public void getValue_NumberDivisibleBySecondDivisorGiven_ShouldReturnSecondKeyword() {
+        int givenInput = givenRandomNumberDivisibleBy(SECOND_DIVISOR);
 
         String output = whenGetValueCalledWith(givenInput);
 
-        thenOutputShouldMatchExpectedString(output, BUZZ);
+        thenOutputShouldMatchExpectedString(output, SECOND_KEYWORD);
     }
 
     @Test
-    public void getValue_NumberDivisibleBy3And5Given_ShouldReturnFIZZBUZZ() {
+    public void getValue_NumberDivisibleByFirstAndSecondDivisorGiven_ShouldReturnCombinedKeyword() {
         int givenInput = givenRandomNumberDivisibleByBoth();
 
         String output = whenGetValueCalledWith(givenInput);
 
-        thenOutputShouldMatchExpectedString(output, FIZZBUZZ);
+        thenOutputShouldMatchExpectedString(output, FIRST_KEYWORD + SECOND_KEYWORD);
     }
 
     private String whenGetValueCalledWith(int input) {
@@ -67,20 +67,20 @@ public class FizzBuzzerTest {
     }
 
     private int givenNumberNotDivisibleByEither() {
-        return numbersDivisibleByNeither.get(0);
+        return numbersDivisibleByNeitherDivisor.get(0);
     }
 
     private int givenRandomNumberDivisibleBy(int i) {
-        int givenNumber = numbersDivisibleByFirstButNotSecond.get(0);
+        int givenNumber = numbersDivisibleByFirstButNotSecondDivisor.get(0);
         if (i == 5) {
-            givenNumber = numbersDivisibleBySecondButNotFirst.get(0);
+            givenNumber = numbersDivisibleBySecondButNotFirstDivisor.get(0);
         }
         return givenNumber;
     }
 
     private int givenRandomNumberDivisibleByBoth() {
-        int givenNumber = numbersDivisibleByFirstButNotSecond.get(0);
-        return givenNumber * SECOND;
+        int givenNumber = numbersDivisibleByFirstButNotSecondDivisor.get(0);
+        return givenNumber * SECOND_DIVISOR;
     }
 
     private ArrayList<Integer> givenNumbersDivisibleBy(int num) {
@@ -110,7 +110,7 @@ public class FizzBuzzerTest {
         ArrayList<Integer> numbersInNeither = new ArrayList<>(sizeOfNumbersInNeither);
 
         for (int i = 1; i < sizeOfNumbersInNeither; i++) {
-            if (!numbersDivisibleByFirstButNotSecond.contains(i) && !numbersDivisibleBySecondButNotFirst.contains(i)) {
+            if (!numbersDivisibleByFirstButNotSecondDivisor.contains(i) && !numbersDivisibleBySecondButNotFirstDivisor.contains(i)) {
                 numbersInNeither.add(i);
             }
         }
@@ -119,19 +119,18 @@ public class FizzBuzzerTest {
     }
 
     private int getSizeOfNumbersInNeither() {
-        return MAX_NUMBER - (numbersDivisibleByFirstButNotSecond.size() + numbersDivisibleBySecondButNotFirst.size());
+        return MAX_NUMBER - (numbersDivisibleByFirstButNotSecondDivisor.size() + numbersDivisibleBySecondButNotFirstDivisor.size());
     }
 
     private void randomizeGivenNumbers() {
-        Collections.shuffle(numbersDivisibleByFirstButNotSecond);
-        Collections.shuffle(numbersDivisibleBySecondButNotFirst);
-        Collections.shuffle(numbersDivisibleByNeither);
+        Collections.shuffle(numbersDivisibleByFirstButNotSecondDivisor);
+        Collections.shuffle(numbersDivisibleBySecondButNotFirstDivisor);
+        Collections.shuffle(numbersDivisibleByNeitherDivisor);
     }
 
-    private static final int FIRST = 3;
-    private static final int SECOND = 5;
+    private static final int FIRST_DIVISOR = 3;
+    private static final int SECOND_DIVISOR = 5;
     private static final int MAX_NUMBER = 100;
-    private static final String FIZZ = "FIZZ";
-    private static final String BUZZ = "BUZZ";
-    private static final String FIZZBUZZ = "FIZZBUZZ";
+    private static final String FIRST_KEYWORD = "FIZZ";
+    private static final String SECOND_KEYWORD = "BUZZ";
 }

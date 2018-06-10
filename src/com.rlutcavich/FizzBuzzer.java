@@ -12,17 +12,16 @@ public class FizzBuzzer {
         String output = String.valueOf(input);
 
         if (input % 3 == 0 && input % 5 == 0) {
-            output = FIZZBUZZ;
+            output = FIRST_KEYWORD + SECOND_KEYWORD;
         } else if (input % 3 == 0) {
-            output = FIZZ;
+            output = FIRST_KEYWORD;
         } else if (input % 5 == 0) {
-            output = BUZZ;
+            output = SECOND_KEYWORD;
         }
         return output;
     }
 
     // Constants
-    private static final String FIZZ = "FIZZ";
-    private static final String BUZZ = "BUZZ";
-    private static final String FIZZBUZZ = "FIZZBUZZ";
+    private static final String FIRST_KEYWORD = "FIZZ";
+    private static final String SECOND_KEYWORD = "BUZZ";
 }
