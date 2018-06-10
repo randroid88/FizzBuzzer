@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class FizzBuzzerTest {
-    private FizzBuzzer fizzBuzzer = FizzBuzzer.getInstance();
+    private FizzBuzzer fizzBuzzer;
     private ArrayList<Integer> numbersDivisibleByFirstButNotSecondDivisor;
     private ArrayList<Integer> numbersDivisibleBySecondButNotFirstDivisor;
     private ArrayList<Integer> numbersDivisibleByNeitherDivisor;
@@ -20,6 +20,8 @@ public class FizzBuzzerTest {
         numbersDivisibleByNeitherDivisor = givenNumbersInNeither();
 
         randomizeGivenNumbers();
+
+        fizzBuzzer = FizzBuzzer.getInstance("FIZZ", "BUZZ");
     }
 
     @Test

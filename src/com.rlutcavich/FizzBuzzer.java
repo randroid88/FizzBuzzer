@@ -1,22 +1,32 @@
 package com.rlutcavich;
 
 public class FizzBuzzer {
-    
-    private FizzBuzzer() {}
+
+    private final String firstKeyword;
+    private final String secondKeyword;
+
+    private FizzBuzzer(String firstKeyword, String secondKeyword) {
+        this.firstKeyword = firstKeyword;
+        this.secondKeyword = secondKeyword;
+    }
 
     public static FizzBuzzer getInstance() {
-        return new FizzBuzzer();
+        return new FizzBuzzer(FIRST_KEYWORD, SECOND_KEYWORD);
+    }
+
+    public static FizzBuzzer getInstance(String firstKeyword, String secondKeyword) {
+        return new FizzBuzzer(firstKeyword, secondKeyword);
     }
 
     public String getValue(int input) {
         String output = String.valueOf(input);
 
         if (input % 3 == 0 && input % 5 == 0) {
-            output = FIRST_KEYWORD + SECOND_KEYWORD;
+            output = firstKeyword + secondKeyword;
         } else if (input % 3 == 0) {
-            output = FIRST_KEYWORD;
+            output = firstKeyword;
         } else if (input % 5 == 0) {
-            output = SECOND_KEYWORD;
+            output = secondKeyword;
         }
         return output;
     }
