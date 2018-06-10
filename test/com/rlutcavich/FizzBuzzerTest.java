@@ -136,6 +136,6 @@ public class FizzBuzzerTest {
     private static final int FIRST_DIVISOR = 3;
     private static final int SECOND_DIVISOR = 5;
     private static final int MAX_NUMBER = 100;
-    private static final String FIRST_KEYWORD = "FIZZ";
-    private static final String SECOND_KEYWORD = "BUZZ";
+    private static final String FIRST_KEYWORD = "Fizz";
+    private static final String SECOND_KEYWORD = "Buzz";
 }

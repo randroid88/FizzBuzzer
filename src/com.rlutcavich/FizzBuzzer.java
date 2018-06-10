@@ -32,6 +32,6 @@ public class FizzBuzzer {
     }
 
     // Constants
-    private static final String FIRST_KEYWORD = "FIZZ";
-    private static final String SECOND_KEYWORD = "BUZZ";
+    private static final String FIRST_KEYWORD = "Fizz";
+    private static final String SECOND_KEYWORD = "Buzz";
 }
