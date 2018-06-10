@@ -57,6 +57,16 @@ public class FizzBuzzerTest {
         thenOutputShouldMatchExpectedString(output, FIRST_KEYWORD + SECOND_KEYWORD);
     }
 
+    @Test
+    public void getValue_defaultFizzBuzzerGiven_ShouldUseDefaultKeywords() {
+        givenDefaultFizzBuzzer();
+        int givenInput = givenRandomNumberDivisibleByBoth();
+
+        String output = whenGetValueCalledWith(givenInput);
+
+        thenOutputShouldMatchExpectedString(output, FIRST_DEFAULT_KEYWORD + SECOND_DEFAULT_KEYWORD);
+    }
+
     private String whenGetValueCalledWith(int input) {
         return fizzBuzzer.getValue(input);
     }
@@ -117,6 +127,10 @@ public class FizzBuzzerTest {
         return numbersInNeither;
     }
 
+    private void givenDefaultFizzBuzzer() {
+        fizzBuzzer = FizzBuzzer.getInstance();
+    }
+
     private int getSizeOfNumbersInNeither() {
         return MAX_NUMBER - (numbersDivisibleByFirstButNotSecondDivisor.size() + numbersDivisibleBySecondButNotFirstDivisor.size());
     }
@@ -136,6 +150,8 @@ public class FizzBuzzerTest {
     private static final int FIRST_DIVISOR = 3;
     private static final int SECOND_DIVISOR = 5;
     private static final int MAX_NUMBER = 100;
-    private static final String FIRST_KEYWORD = "Fizz";
-    private static final String SECOND_KEYWORD = "Buzz";
+    private static final String FIRST_DEFAULT_KEYWORD = "Fizz";
+    private static final String SECOND_DEFAULT_KEYWORD = "Buzz";
+    private static final String FIRST_KEYWORD = "Bizz";
+    private static final String SECOND_KEYWORD = "Fuzz";
 }
