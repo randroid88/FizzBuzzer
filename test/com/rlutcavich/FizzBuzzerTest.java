@@ -15,10 +15,7 @@ public class FizzBuzzerTest {
 
     @Before
     public void setup() {
-        numbersDivisibleByFirstButNotSecondDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(FIRST_DIVISOR), givenNumbersDivisibleBy(SECOND_DIVISOR));
-        numbersDivisibleBySecondButNotFirstDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(SECOND_DIVISOR), givenNumbersDivisibleBy(FIRST_DIVISOR));
-        numbersDivisibleByNeitherDivisor = givenNumbersInNeither();
-
+        setupGivenNumbers();
         randomizeGivenNumbers();
 
         fizzBuzzer = FizzBuzzer.getInstance(FIRST_KEYWORD, SECOND_KEYWORD);
@@ -122,6 +119,12 @@ public class FizzBuzzerTest {
 
     private int getSizeOfNumbersInNeither() {
         return MAX_NUMBER - (numbersDivisibleByFirstButNotSecondDivisor.size() + numbersDivisibleBySecondButNotFirstDivisor.size());
+    }
+
+    private void setupGivenNumbers() {
+        numbersDivisibleByFirstButNotSecondDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(FIRST_DIVISOR), givenNumbersDivisibleBy(SECOND_DIVISOR));
+        numbersDivisibleBySecondButNotFirstDivisor = givenNumbersInFirstListButNotSecond(givenNumbersDivisibleBy(SECOND_DIVISOR), givenNumbersDivisibleBy(FIRST_DIVISOR));
+        numbersDivisibleByNeitherDivisor = givenNumbersInNeither();
     }
 
     private void randomizeGivenNumbers() {
