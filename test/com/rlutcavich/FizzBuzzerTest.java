@@ -21,7 +21,7 @@ public class FizzBuzzerTest {
 
         randomizeGivenNumbers();
 
-        fizzBuzzer = FizzBuzzer.getInstance("FIZZ", "BUZZ");
+        fizzBuzzer = FizzBuzzer.getInstance(FIRST_KEYWORD, SECOND_KEYWORD);
     }
 
     @Test
